@@ -1,11 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+const blue = {
+backgroundColor : '#00B1E1'
+};
+const red = {
+backgroundColor : '#E9573F'
+};
+
+
 class InputHello extends React.Component {
+  
+
+	
 	
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {value: 'Blue'};
+	this.state = {color: blue};
 	//bind correect this
     this.handleChange = this.handleChange.bind(this);
   
@@ -14,6 +26,12 @@ class InputHello extends React.Component {
   //handle typing event
   handleChange(e) {
     this.setState({value: e.target.value});
+	if (e.target.value == "Blue"){
+		this.setState({color: blue});
+	}
+	else{
+		this.setState({color: red});
+	}
   }
   
   
@@ -23,17 +41,19 @@ class InputHello extends React.Component {
 
     return (
       <div>
-	  <label>
-	  Name:
-	  //render jsx with starting value blank on onchange run handleChange event handler
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
-		</label>
+		<select value={this.state.value} onChange={this.handleChange}>
+			<option value="Blue"> Blue </option>
+			<option value="Red"> Red </option>
+		</select>
 		
-		<p>
-		//output text
-		{this.state.value}
-		</p>
+		<div style={this.state.color}>
+			This is the changing bg color
+		</div>
+		
       </div>
+	  
+	  
+	  
     )
   }
 }
