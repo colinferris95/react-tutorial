@@ -2,14 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class InputHello extends React.Component {
+	
   constructor(props) {
     super(props);
     this.state = {value: ''};
-
+	//bind correect this
     this.handleChange = this.handleChange.bind(this);
   
   }
   
+  //handle typing event
   handleChange(e) {
     this.setState({value: e.target.value});
   }
@@ -23,10 +25,12 @@ class InputHello extends React.Component {
       <div>
 	  <label>
 	  Name:
+	  //render jsx with starting value blank on onchange run handleChange event handler
         <input type="text" value={this.state.value} onChange={this.handleChange} />
 		</label>
 		
 		<p>
+		//output text
 		{this.state.value}
 		</p>
       </div>
