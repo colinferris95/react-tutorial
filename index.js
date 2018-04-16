@@ -22,6 +22,7 @@ class InputHello extends React.Component {
 	//bind correect this
     this.handleChange = this.handleChange.bind(this);
 	this.handleSubmit = this.handleSubmit.bind(this);
+	this.checkItem = this.checkItem.bind(this);
   
   }
   
@@ -43,11 +44,21 @@ class InputHello extends React.Component {
 	  
   }
   
-  checkItem(index){
+  checkItem(e){
+	  let index = e.target.value;
+	  
+	  if (todoItems[index].checked == 'true'){
+		
+		todoItems[index].checked = 'false';
+
+	  }
+	  else{
+		todoItems[index].checked = 'true';  
+		  
+	  }
 	  
 	  
-	  //alert(todoItems[0].checked); 
-	  
+	  this.forceUpdate();
   }
   
   
@@ -72,7 +83,7 @@ class InputHello extends React.Component {
 		{todoItems.map((item,index) => 
 			<li key={index} >
 			{item.name}
-			
+			{item.checked}
 	
 			</li>
 	
@@ -86,7 +97,7 @@ class InputHello extends React.Component {
 		<div>
 		{
 			todoItems.map((item, index) => {
-			//return <button key={index} onClick={this.checkItem(index)}>check</button>
+			return <button key={index} value={index} onClick={this.checkItem}>check</button>
 		})
         }
 		</div>
