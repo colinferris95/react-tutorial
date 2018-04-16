@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const blue = {
-backgroundColor : '#00B1E1'
-};
-const red = {
-backgroundColor : '#E9573F'
-};
+//variables
+const todoItems = [
+	
+	{
+	name: 'test',
+	checked: 'false'
+	}
 
+];
 
 class InputHello extends React.Component {
   
@@ -16,39 +18,79 @@ class InputHello extends React.Component {
 	
   constructor(props) {
     super(props);
-    this.state = {value: 'Blue'};
-	this.state = {color: blue};
+    this.state = {value: ''};
 	//bind correect this
     this.handleChange = this.handleChange.bind(this);
+	this.handleSubmit = this.handleSubmit.bind(this);
   
   }
   
   //handle typing event
   handleChange(e) {
     this.setState({value: e.target.value});
-	if (e.target.value == "Blue"){
-		this.setState({color: blue});
-	}
-	else{
-		this.setState({color: red});
-	}
+	
+  }
+  
+  handleSubmit(e){
+	  //add to array
+	  //alert(this.state.value);
+	//todoItems.concat(
+	//[this.state.value]);
+	let listObject = {name: this.state.value.toString(), checked: 'false'};
+	todoItems.push (listObject);
+
+	this.forceUpdate();
+	  
+  }
+  
+  checkItem(index){
+	  
+	  
+	  //alert(todoItems[0].checked); 
+	  
   }
   
   
   
   render() {
    
+	//const items = todoItems.map((d) => <li key={d}>{d}</li>);
 
     return (
-      <div>
-		<select value={this.state.value} onChange={this.handleChange}>
-			<option value="Blue"> Blue </option>
-			<option value="Red"> Red </option>
-		</select>
+		<div>
+	
 		
-		<div style={this.state.color}>
-			This is the changing bg color
+			<input type="text" value={this.state.value} onChange={this.handleChange} />
+			
+			<button onClick={this.handleSubmit}>
+				Add Item
+			</button>
+		
+		
+	  
+		<ul>
+		{todoItems.map((item,index) => 
+			<li key={index} >
+			{item.name}
+			
+	
+			</li>
+	
+	
+		)}
+		</ul>
+	  
+	  
+	  
+		
+		<div>
+		{
+			todoItems.map((item, index) => {
+			//return <button key={index} onClick={this.checkItem(index)}>check</button>
+		})
+        }
 		</div>
+	
 		
       </div>
 	  
