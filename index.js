@@ -15,15 +15,6 @@ const red = {
 	textDecoration: 'line-through'
 }
 
-const todoItems = [
-	
-	{
-	name: 'test',
-	color: green
-	}
-
-];
-
 class InputHello extends React.Component {
   
 
@@ -32,10 +23,12 @@ class InputHello extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
+	this.state = {array : [{name: 'test', color: green}]};
 	//bind correect this
     this.handleChange = this.handleChange.bind(this);
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.checkItem = this.checkItem.bind(this);
+	this.deleteItem = this.deleteItem.bind(this);
   
   }
   
@@ -47,11 +40,9 @@ class InputHello extends React.Component {
   
   handleSubmit(e){
 	  //add to array
-	  //alert(this.state.value);
-	//todoItems.concat(
-	//[this.state.value]);
+
 	let listObject = {name: this.state.value.toString(), color: green};
-	todoItems.push (listObject);
+	this.state.array.push (listObject);
 
 	this.forceUpdate();
 	  
@@ -60,18 +51,27 @@ class InputHello extends React.Component {
   checkItem(e){
 	  let index = e.target.value;
 	  
-	  if (todoItems[index].color == green){
+	  if (this.state.array[index].color == green){
 		
-		todoItems[index].color = red;
+		this.state.array[index].color = red;
 
 	  }
 	  else{
-		todoItems[index].color = green;  
+		this.state.array[index].color = green;  
 		  
 	  }
 	  
 	  
 	  this.forceUpdate();
+  }
+  
+  deleteItem(e){
+	  let index = e.target.value;
+	  
+	  this.state.array.splice(index,1);
+	  this.forceUpdate();
+	  
+	  
   }
   
   
@@ -93,11 +93,12 @@ class InputHello extends React.Component {
 		
 	  
 		<ul>
-		{todoItems.map((item,index) => 
+		{this.state.array.map((item,index) => 
 			<li key={index} style={item.color} >
 			{item.name}
 		
 			<button key={index} value={index} onClick={this.checkItem}>check</button>
+			<button key={index} value={index} onClick={this.deleteItem}>remove</button>
 			</li>
 	
 	
