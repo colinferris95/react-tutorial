@@ -2,11 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 //variables
+//#00FF00
+//E9573F
+const green = {
+	
+	color: '#00FF00'
+	
+}
+
+const red = {
+	color: '#E9573F',
+	textDecoration: 'line-through'
+}
+
 const todoItems = [
 	
 	{
 	name: 'test',
-	checked: 'false'
+	color: green
 	}
 
 ];
@@ -37,7 +50,7 @@ class InputHello extends React.Component {
 	  //alert(this.state.value);
 	//todoItems.concat(
 	//[this.state.value]);
-	let listObject = {name: this.state.value.toString(), checked: 'false'};
+	let listObject = {name: this.state.value.toString(), color: green};
 	todoItems.push (listObject);
 
 	this.forceUpdate();
@@ -47,13 +60,13 @@ class InputHello extends React.Component {
   checkItem(e){
 	  let index = e.target.value;
 	  
-	  if (todoItems[index].checked == 'true'){
+	  if (todoItems[index].color == green){
 		
-		todoItems[index].checked = 'false';
+		todoItems[index].color = red;
 
 	  }
 	  else{
-		todoItems[index].checked = 'true';  
+		todoItems[index].color = green;  
 		  
 	  }
 	  
@@ -81,10 +94,10 @@ class InputHello extends React.Component {
 	  
 		<ul>
 		{todoItems.map((item,index) => 
-			<li key={index} >
+			<li key={index} style={item.color} >
 			{item.name}
-			{item.checked}
-	
+		
+			<button key={index} value={index} onClick={this.checkItem}>check</button>
 			</li>
 	
 	
@@ -94,13 +107,7 @@ class InputHello extends React.Component {
 	  
 	  
 		
-		<div>
-		{
-			todoItems.map((item, index) => {
-			return <button key={index} value={index} onClick={this.checkItem}>check</button>
-		})
-        }
-		</div>
+		
 	
 		
       </div>
