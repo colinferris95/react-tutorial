@@ -83,16 +83,16 @@ class InputHello extends React.Component {
 
     return (
 		<div>
-	
-		
+		<ReactBootstrap.Form inline>
+		<ReactBootstrap.FormGroup controlId="formInlineName">
 			<ReactBootstrap.FormControl  type="text" value={this.state.value} onChange={this.handleChange} />
-			
+		</ReactBootstrap.FormGroup>
 			
 			<ReactBootstrap.Button onClick={this.handleSubmit}>
 				Add Item
 			</ReactBootstrap.Button>
 		
-		
+		</ReactBootstrap.Form>
 	  
 		<ul>
 		{this.state.array.map((item,index) => 
