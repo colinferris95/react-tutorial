@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as ReactBootstrap from 'react-bootstrap';
 
 //variables
 //#00FF00
@@ -44,7 +45,7 @@ class InputHello extends React.Component {
 	let listObject = {name: this.state.value.toString(), color: green};
 	this.state.array.push (listObject);
 
-	this.forceUpdate();
+	this.setState(this.state);
 	  
   }
   
@@ -62,14 +63,14 @@ class InputHello extends React.Component {
 	  }
 	  
 	  
-	  this.forceUpdate();
+	  this.setState(this.state);
   }
   
   deleteItem(e){
 	  let index = e.target.value;
 	  
 	  this.state.array.splice(index,1);
-	  this.forceUpdate();
+	  this.setState(this.state);
 	  
 	  
   }
@@ -84,11 +85,12 @@ class InputHello extends React.Component {
 		<div>
 	
 		
-			<input type="text" value={this.state.value} onChange={this.handleChange} />
+			<ReactBootstrap.FormControl  type="text" value={this.state.value} onChange={this.handleChange} />
 			
-			<button onClick={this.handleSubmit}>
+			
+			<ReactBootstrap.Button onClick={this.handleSubmit}>
 				Add Item
-			</button>
+			</ReactBootstrap.Button>
 		
 		
 	  
@@ -97,8 +99,9 @@ class InputHello extends React.Component {
 			<li key={index} style={item.color} >
 			{item.name}
 		
-			<button key={index} value={index} onClick={this.checkItem}>check</button>
-			<button key={index} value={index} onClick={this.deleteItem}>remove</button>
+			<ReactBootstrap.Button bsStyle="success" bsSize="small" key={index} value={index} onClick={this.checkItem}>check</ReactBootstrap.Button>
+			<ReactBootstrap.Button bsStyle="success" bsSize="small" key={index} value={index} onClick={this.deleteItem}>remove</ReactBootstrap.Button>
+			
 			</li>
 	
 	
