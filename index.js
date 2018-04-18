@@ -1,79 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import * as ReactBootstrap from 'react-bootstrap';
 
-//variables
-//#00FF00
-//E9573F
-const green = {
-	
-	color: '#00FF00'
-	
-}
 
-const red = {
-	color: '#E9573F',
-	textDecoration: 'line-through'
-}
-
-class InputHello extends React.Component {
+export class TodoList extends React.Component {
   
-
-	
-	
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-	this.state = {array : [{name: 'test', color: green}]};
-	//bind correect this
-    this.handleChange = this.handleChange.bind(this);
-	this.handleSubmit = this.handleSubmit.bind(this);
-	this.checkItem = this.checkItem.bind(this);
-	this.deleteItem = this.deleteItem.bind(this);
   
-  }
-  
-  //handle typing event
-  handleChange(e) {
-    this.setState({value: e.target.value});
-	
-  }
-  
-  handleSubmit(e){
-	  //add to array
-
-	let listObject = {name: this.state.value.toString(), color: green};
-	this.state.array.push (listObject);
-
-	this.setState(this.state);
-	  
-  }
-  
-  checkItem(e){
-	  let index = e.target.value;
-	  
-	  if (this.state.array[index].color == green){
-		
-		this.state.array[index].color = red;
-
-	  }
-	  else{
-		this.state.array[index].color = green;  
-		  
-	  }
-	  
-	  
-	  this.setState(this.state);
-  }
-  
-  deleteItem(e){
-	  let index = e.target.value;
-	  
-	  this.state.array.splice(index,1);
-	  this.setState(this.state);
-	  
-	  
-  }
   
   
   
@@ -81,32 +12,54 @@ class InputHello extends React.Component {
    
 	//const items = todoItems.map((d) => <li key={d}>{d}</li>);
 
+	const formValue = this.props.value;
+	const formChange = this.props.onChange;
+	const formSubmit = this.props.onClick;
+	const listArray = this.props.array;
+	const itemClick = this.props.checkItem;
+	const itemDelete = this.props.deleteItem;
+	
+	
     return (
 		<div>
 		<ReactBootstrap.Form inline>
 		<ReactBootstrap.FormGroup controlId="formInlineName">
-			<ReactBootstrap.FormControl  type="text" value={this.state.value} onChange={this.handleChange} />
+			<ReactBootstrap.FormControl  type="text" value={formValue} onChange={formChange} />
 		</ReactBootstrap.FormGroup>
 			
-			<ReactBootstrap.Button onClick={this.handleSubmit}>
+			<ReactBootstrap.Button onClick={formSubmit}>
 				Add Item
 			</ReactBootstrap.Button>
-		
 		</ReactBootstrap.Form>
-	  
-		<ul>
-		{this.state.array.map((item,index) => 
-			<li key={index} style={item.color} >
-			{item.name}
 		
-			<ReactBootstrap.Button bsStyle="success" bsSize="small" key={index} value={index} onClick={this.checkItem}>check</ReactBootstrap.Button>
-			<ReactBootstrap.Button bsStyle="success" bsSize="small" key={index} value={index} onClick={this.deleteItem}>remove</ReactBootstrap.Button>
+	  
+		<ReactBootstrap.ListGroup>
+		{listArray.map((item,index) => 
 			
-			</li>
+			
+			
+				<ReactBootstrap.ListGroupItem key={index}  >
+					
+					<ReactBootstrap.Row className="show-grid">
+						
+						<ReactBootstrap.Col xs={12} md={8} style={item.color}>
+					
+							{item.name}
+						</ReactBootstrap.Col>
+					
+						<ReactBootstrap.Col xs={6} md={4}>
+							<ReactBootstrap.Button bsStyle="primary" bsSize="small" key={index} value={index} onClick={itemClick}>check</ReactBootstrap.Button>
+							<ReactBootstrap.Button bsStyle="danger" bsSize="small" key={index} value={index} onClick={itemDelete}>remove</ReactBootstrap.Button>
+						</ReactBootstrap.Col>
+				
+					</ReactBootstrap.Row> 
+					
+				</ReactBootstrap.ListGroupItem>
+		
 	
 	
 		)}
-		</ul>
+		</ReactBootstrap.ListGroup>
 	  
 	  
 	  
@@ -122,11 +75,3 @@ class InputHello extends React.Component {
   }
 }
 
-const node = document.querySelector('#app')
-const element = (
-  <div>
-    <InputHello />
-  </div>
-)
-
-ReactDOM.render(element, node)
