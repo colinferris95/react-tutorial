@@ -1,77 +1,90 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as ReactBootstrap from 'react-bootstrap';
 
+const urlForUsername = 'https://api.github.com/users/';
 
-export class TodoList extends React.Component {
+
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      requestFailed: false
+    }
+
+     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(urlForUsername + this.state.value)
+      .then(response => {
+        if (!response.ok) {
+          throw Error("Network request failed")
+        }
+
+        return response
+      })
+      .then(d => d.json())
+      .then(d => {
+        this.setState({
+          githubData: d
+        })
+      }, () => {
+        this.setState({
+          requestFailed: true
+        })
+      })
+  }
+
+  handleChange(e) {	
+    this.setState({value: e.target.value});	
+	this.componentDidMount();	
+
+  }
   
-  
-  
-  
-  
+  handleSubmit(e){
+	  this.setState({value: e.target.value});	
+	  
+	  
+  }
+
   render() {
-   
-	//const items = todoItems.map((d) => <li key={d}>{d}</li>);
 
-	const formValue = this.props.value;
-	const formChange = this.props.onChange;
-	const formSubmit = this.props.onClick;
-	const listArray = this.props.array;
-	const itemClick = this.props.checkItem;
-	const itemDelete = this.props.deleteItem;
-	
-	
+    if (this.state.requestFailed) return <p>Failed!</p>
+    if (!this.state.githubData) return <p>Loading...</p>
+
     return (
-		<div>
-		<ReactBootstrap.Form inline>
+	<div>
+	<ReactBootstrap.Form inline>
+	
 		<ReactBootstrap.FormGroup controlId="formInlineName">
-			<ReactBootstrap.FormControl  type="text" value={formValue} onChange={formChange} />
+			<ReactBootstrap.FormControl  type="text" value={this.state.value} onChange={this.handleChange} />
+		
 		</ReactBootstrap.FormGroup>
-			
-			<ReactBootstrap.Button onClick={formSubmit}>
-				Add Item
-			</ReactBootstrap.Button>
-		</ReactBootstrap.Form>
 		
-	  
-		<ReactBootstrap.ListGroup>
-		{listArray.map((item,index) => 
-			
-			
-			
-				<ReactBootstrap.ListGroupItem key={index}  >
-					
-					<ReactBootstrap.Row className="show-grid">
-						
-						<ReactBootstrap.Col xs={12} md={8} style={item.color}>
-					
-							{item.name}
-						</ReactBootstrap.Col>
-					
-						<ReactBootstrap.Col xs={6} md={4}>
-							<ReactBootstrap.Button bsStyle="primary" bsSize="small" key={index} value={index} onClick={itemClick}>check</ReactBootstrap.Button>
-							<ReactBootstrap.Button bsStyle="danger" bsSize="small" key={index} value={index} onClick={itemDelete}>remove</ReactBootstrap.Button>
-						</ReactBootstrap.Col>
-				
-					</ReactBootstrap.Row> 
-					
-				</ReactBootstrap.ListGroupItem>
-		
+		<ReactBootstrap.Button onClick={this.handleSubmit}>
+		Submit
+		</ReactBootstrap.Button>
 	
+	</ReactBootstrap.Form>
 	
-		)}
-		</ReactBootstrap.ListGroup>
-	  
-	  
-	  
-		
-		
-	
-		
+      
+
+       
+        <h2>{this.state.githubData.name}</h2>
       </div>
-	  
-	  
-	  
     )
+
   }
 }
 
+
+const node = document.querySelector('#app')
+const element = (
+  <div>
+    <MyComponent />
+  </div>
+)
+
+ReactDOM.render(element, node)
