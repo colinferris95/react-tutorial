@@ -14,6 +14,7 @@ class MyComponent extends React.Component {
     }
 
      this.handleChange = this.handleChange.bind(this);
+	 this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -37,13 +38,13 @@ class MyComponent extends React.Component {
 
   handleChange(e) {	
     this.setState({value: e.target.value});	
-	this.componentDidMount();	
+	
 
   }
   
   handleSubmit(e){
-	  this.setState({value: e.target.value});	
 	  
+	  this.componentDidMount();
 	  
   }
 
@@ -57,7 +58,7 @@ class MyComponent extends React.Component {
 	<ReactBootstrap.Form inline>
 	
 		<ReactBootstrap.FormGroup controlId="formInlineName">
-			<ReactBootstrap.FormControl  type="text" value={this.state.value} onChange={this.handleChange} />
+			<ReactBootstrap.FormControl  type="text" value={this.state.value} onChange = {this.handleChange}  />
 		
 		</ReactBootstrap.FormGroup>
 		
