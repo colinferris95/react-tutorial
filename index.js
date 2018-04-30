@@ -18,23 +18,21 @@ class MyComponent extends React.Component {
 
   componentDidMount() {
     fetch(urlForUsername + this.state.value)
-      .then(response => {
-        if (!response.ok) {
-          throw Error("Network request failed")
-        }
-
-        return response
-      })
-      .then(d => d.json())
-      .then(d => {
-        this.setState({
-          githubData: d
-        })
-      }, () => {
-        this.setState({
-          requestFailed: true
-        })
-      })
+      .then(res => res.json())
+	  .then(
+	  (result) => {
+		 this.setState({
+			githubData:result
+	    });
+	  },
+	  (error) => {
+		  this.setState({
+			requestFailed : true ,
+			error
+		  });
+	  }
+	)
+	  
   }
 
   handleChange(e) {	
