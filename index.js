@@ -72,6 +72,9 @@ class MyComponent extends React.Component {
 
        
         <h2>{this.state.githubData.name}</h2>
+		<ReactBootstrap.Col xs={6} md={4}>
+		<ReactBootstrap.Image src={this.state.githubData.avatar_url} circle responsive />
+		</ReactBootstrap.Col>
       </div>
     )
 
@@ -81,9 +84,9 @@ class MyComponent extends React.Component {
 
 const node = document.querySelector('#app')
 const element = (
-  <div>
+ 
     <MyComponent />
-  </div>
+  
 )
 
 ReactDOM.render(element, node)
